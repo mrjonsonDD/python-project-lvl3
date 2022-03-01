@@ -1,0 +1,19 @@
+__pycache__/
+.pycache
+.pytest_cache
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Distribution / packaging
+.vscode
+dist/
+.dist
+env/
+.env
+venv/
+.venv
+coverage.xml
+.coverage
+setup.cfg
+.idea
+tests/hexlet test/
