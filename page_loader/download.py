@@ -1,31 +1,31 @@
-from page_loader.loader import (load_page, formation_local_name,
-                                create_directory,
-                                edit_links_to_local, save_file,
-                                load_files)
-import logging
 import os
+import logging
 from progress.bar import IncrementalBar
+from page_loader.loader import load_page, format_local_name, edit_page_and_get_links 
+from page_loader.saver import create_dir, save_file, upload_files
 
 
-def download(url, path):
+logger = logging.getLogger(__name__)
+
+
+def download(url, cli_path):
     bar = IncrementalBar('Loading page', max=5, suffix='%(percent)d%%')
-    page = load_page(url)
+    html_page = load_page(url)
     bar.next()
-    name_page = format_name(url)
-    path_page = os.path.join(path, name_page)
+    name_page = format_local_name(url)
+    path_page = os.path.join(cli_path, name_page)
     bar.next()
-    name_folder = formation_local_name(url, dir=True)
-    path_folder = os.path.join(path, name_folder)
+    name_files_folder = format_local_name(url, dir=True)
+    path_files_folder = os.path.join(cli_path, name_files_folder)
     bar.next()
-    create_directory(path_folder)
+    create_dir(path_files_folder)
     bar.next()
-    changed_page, source_of_files = \
-        edit_links_to_local(page, url, path_folder)
+    edited_page, resources = \
+        edit_page_and_get_links(html_page, url, path_files_folder)
     bar.next()
-    save_file(changed_page, path_page)
+    save_file(edited_page, path_page)
     bar.next()
-    load_files(source_of_files)
-    bar.next()
+    upload_files(resources)
     bar.finish()
-    logging.info('The page is saved')
+    logger.debug('Page and resources loaded')
     return path_page

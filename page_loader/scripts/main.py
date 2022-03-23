@@ -1,20 +1,21 @@
+from page_loader.parse_args import parse_cli_args
 from page_loader.download import download
-from page_loader.loader import changing_logging_lvel, KnownError
-from page_loader.parse_args import cli_parser
 import logging
 import sys
 
 
-def main() -> None:
-    namespace = cli_parser()
-    url = namespace.URL
-    path = namespace.output
-    level_log = namespace.level
-    changing_logging_lvel(level_log)
+logger = logging.getLogger(__name__)
+
+
+def main():
+    logger.info('STARTING')
+    arguments = parse_cli_args()
+    url = arguments.URL
+    output_path = arguments.output
     try:
-        file_path = download(url, path)
-        print(f'Page saved in {file_path}')
-    except KnownError:
+        file_path = download(url, output_path)
+        print(f'Page saved in: {file_path}')
+    except Exception:
         logging.error('Error')
         sys.exit(1)
     else:

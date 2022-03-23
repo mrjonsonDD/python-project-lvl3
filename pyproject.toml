@@ -5,7 +5,7 @@ description = ""
 authors = ["mrJonson <mr.Jonson@mail.ru>"]
 repository = "https://github.com/mrjonsonDD/python-project-lvl3"
 packages = [
-  {include = "gendiff" },
+  {include = "page_loader" },
 ]
 classifiers = [
     "Topic :: Education"
