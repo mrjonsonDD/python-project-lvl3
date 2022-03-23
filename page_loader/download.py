@@ -1,7 +1,7 @@
 import os
 import logging
 from progress.bar import IncrementalBar
-from page_loader.loader import load_page, format_local_name, edit_page_and_get_links 
+from page_loader.loader import load_page, format_local_name, edit_page
 from page_loader.saver import create_dir, save_file, upload_files
 
 
@@ -21,7 +21,7 @@ def download(url, cli_path):
     create_dir(path_files_folder)
     bar.next()
     edited_page, resources = \
-        edit_page_and_get_links(html_page, url, path_files_folder)
+        edit_page(html_page, url, path_files_folder)
     bar.next()
     save_file(edited_page, path_page)
     bar.next()

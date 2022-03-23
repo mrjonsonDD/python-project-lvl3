@@ -11,6 +11,7 @@ def create_dir(path):
     except IOError as e:
         raise Exception('Your folder is incorrect') from e
 
+
 def save_file(data, path):
     logging.info('Writing binary info to file, saving it')
     try:

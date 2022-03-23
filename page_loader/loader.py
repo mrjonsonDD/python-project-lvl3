@@ -17,7 +17,7 @@ def is_local(pointer, url):
     return first == second
 
 
-def edit_page_and_get_links(html_page, url, path_files_folder):
+def edit_page(html_page, url, path_files_folder):
     logging.info('Editing page and getting links for wanted tags')
     dir_path, dir_name = os.path.split(path_files_folder)
     soup = BeautifulSoup(html_page, 'html.parser')
