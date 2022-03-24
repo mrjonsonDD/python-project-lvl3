@@ -23,10 +23,8 @@ $ page-loader --output=/var/tmp -l=error https://google.com/somecontent
 ```
 It means (Где):
 
-utility call (вызов утилиты)
 
-
-`$ page-loader` utility call (вызов утилиты)
+`$ page-loader` - utility call (вызов утилиты)
 
 `--output` + `=/path` - the path to the directory, by default it saves to the call directory (указываеn путь до дириектории, по умолчания сохраняет в директорию вызова)
 
