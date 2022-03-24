@@ -36,3 +36,4 @@ It means (Где):
 
 ## Demonstration (Демонстрация):
 
+<a href="https://asciinema.org/a/480288" target="_blank"><img src="https://asciinema.org/a/480288.svg" /></a>
