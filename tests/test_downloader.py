@@ -8,26 +8,37 @@ import os
 
 URL_TEST = 'http://knopka.ush.ru/'
 
+PATH_FIXTURES_MOCK_lINKS = {
+    'tests/fixtures/before_test_page.html': 'http://knopka.ush.ru/',
+    'tests/fixtures/test_css.css': 'http://knopka.ush.ru/stl_newstatus.css',
+    'tests/fixtures/test_svg.svg': 'http://knopka.ush.ru/images/logo.svg',
+}
 
-def test_downloader(requests_mock) -> None:
+LOCAL_PATH_NAME = (
+    'knopka-ush-ru_files/knopka-ush-ru.html',
+    'knopka-ush-ru_files/knopka-ush-ru-stl_newstatus.css',
+    'knopka-ush-ru_files/knopka-ush-ru-images-logo.svg',
+)
+
+
+def test_downloader(requests_mock):
     with tempfile.TemporaryDirectory() as temp:
-        fixture = 'tests/fixtures/before_test_page.html'
-        link = 'http://knopka.ush.ru/'
-        with open(fixture, 'rb') as fixture_file:
-            mocking_content = fixture_file.read()
-        requests_mock.get(link, content=mocking_content)
+        for fixture, link in PATH_FIXTURES_MOCK_lINKS.items():
+            with open(fixture, 'rb') as fixture_file:
+                mocking_content = fixture_file.read()
+            requests_mock.get(link, content=mocking_content)
         path_load_page = download(URL_TEST, temp)
 
         with open(os.path.join(temp, path_load_page)) as test_page:
             with open('tests/fixtures/after_test_page.html') as fixture_page:
                 assert test_page.read() == fixture_page.read()
 
-        fixture = 'tests/fixtures/before_test_page.html'
-        local = os.path.join(temp, 'knopka-ush-ru_files/knopka-ush-ru.html')
+        local = [os.path.join(temp, file) for file in LOCAL_PATH_NAME]
 
-        with open(fixture, 'rb') as fixture_file:
-            with open(local, 'rb') as load_file:
-                assert fixture_file.read() == load_file.read()
+        for fixture, local in zip(PATH_FIXTURES_MOCK_lINKS, local):
+            with open(fixture, 'rb') as fixture_file:
+                with open(local, 'rb') as load_file:
+                    assert fixture_file.read() == load_file.read()
 
 
 @pytest.mark.parametrize('URL, get_name, file_status, dir_status,', [
