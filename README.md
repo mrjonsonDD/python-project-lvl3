@@ -7,4 +7,4 @@
 page-loader - утилита, которая скачивает страницу из сети и сохраняет ее в указанную директорию (по умолчанию в директорию запуска программы).
 
 # Установка:
-pip install git+https://github.com/K0Hb/python-project-lvl3.git
+pip install git+https://github.com/mrjonsonDD/python-project-lvl3.git
