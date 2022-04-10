@@ -10,10 +10,10 @@ logger = logging.getLogger(__name__)
 
 def download(url, cli_path):
     bar = IncrementalBar('Loading page', max=5, suffix='%(percent)d%%')
-    html_page = load_page(url)
+    html_loaded_page = load_page(url)
     bar.next()
-    name_page = format_local_name(url)
-    path_page = os.path.join(cli_path, name_page)
+    html_page_name = format_local_name(url)
+    html_page_path = os.path.join(cli_path, html_page_name)
     bar.next()
     name_files_folder = format_local_name(url, dir=True)
     path_files_folder = os.path.join(cli_path, name_files_folder)
@@ -21,11 +21,11 @@ def download(url, cli_path):
     create_dir(path_files_folder)
     bar.next()
     edited_page, resources = \
-        edit_page(html_page, url, path_files_folder)
+        edit_page(html_loaded_page, url, path_files_folder)
     bar.next()
-    save_file(edited_page, path_page)
+    save_file(edited_page, html_page_path)
     bar.next()
     upload_files(resources)
     bar.finish()
     logger.debug('Page and resources loaded')
-    return path_page
+    return html_page_path

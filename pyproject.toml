@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
+description = "Page Downloader utility"
 authors = ["mrJonson <mr.Jonson@mail.ru>"]
 repository = "https://github.com/mrjonsonDD/python-project-lvl3"
 packages = [
   {include = "page_loader" },
 ]
 classifiers = [
-    "Topic :: Education"
+    "Topic : Education"
 ]
 
 [tool.poetry.scripts]
@@ -20,6 +20,7 @@ requests = "^2.27.1"
 progress = "^1.6"
 beautifulsoup4 = "^4.10.0"
 lxml = "^4.8.0"
+django-bootstrap4 = "^22.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.0.1"
