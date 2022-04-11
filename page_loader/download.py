@@ -9,11 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def download(url, cli_path):
-<<<<<<< HEAD
     bar = IncrementalBar('Processing', max=5)
-=======
-    bar = IncrementalBar('Loading page', max=5, suffix='%(percent)d%%')
->>>>>>> f77daa26720b0366208a8d85b599f65bd55a2f93
     html_loaded_page = load_page(url)
     bar.next()
     html_page_name = format_local_name(url)
