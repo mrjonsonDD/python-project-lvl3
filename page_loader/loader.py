@@ -2,8 +2,8 @@ import requests
 import re
 import os
 import logging
-from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
+from bs4 import BeautifulSoup
 
 
 RED1 = '\033[31m'
@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 WANTED_TAGS = {'link': 'href', 'img': 'src', 'script': 'src'}
 
 
+<<<<<<< HEAD
 def is_local(pointer, url):
     logging.info('Checking if file is local')
     parsed_url = urlparse(url).netloc
@@ -20,6 +21,8 @@ def is_local(pointer, url):
     return parsed_url == parsed_pointer
 
 
+=======
+>>>>>>> f77daa26720b0366208a8d85b599f65bd55a2f93
 def edit_page(html_page, url, path_files_folder):
     logging.info('Editing page and getting links for wanted tags')
     dir_path, dir_name = os.path.split(path_files_folder)
@@ -41,6 +44,12 @@ def edit_page(html_page, url, path_files_folder):
     return edited_page, links
 
 
+def is_local(pointer, url):
+    logging.info('Checking if file is local')
+    parsed_url = urlparse(url).netloc
+    parsed_pointer = urlparse(urljoin(url, pointer)).netloc
+    return parsed_url == parsed_pointer
+
 def load_page(url):
     logging.info('Loading page and getting response')
     try:
@@ -49,15 +58,27 @@ def load_page(url):
         status = response.status_code
     except (requests.exceptions.MissingSchema,
             requests.exceptions.InvalidSchema) as e:
+<<<<<<< HEAD
         logging.error(f'{RED1}Wrong address{RED2}')
+=======
+        logging.error("\033[31m {}\033[37m" .format('Wrong address'))
+>>>>>>> f77daa26720b0366208a8d85b599f65bd55a2f93
         raise Exception('Wrong address') from e
     
     except requests.exceptions.HTTPError as e:
+<<<<<<< HEAD
         logging.error(f'{RED1}Connection failed{RED2}')
+=======
+        logging.error("\033[31m {}\033[37m" .format('Connection failed'))
+>>>>>>> f77daa26720b0366208a8d85b599f65bd55a2f93
         raise Exception('Connection failed') from e
     
     except requests.exceptions.ConnectionError as e:
+<<<<<<< HEAD
         logging.error(f'{RED1}Connection error{RED2}')
+=======
+        logging.error("\033[31m {}\033[37m" .format('Connection error'))
+>>>>>>> f77daa26720b0366208a8d85b599f65bd55a2f93
         raise Exception('Connection error') from e
     
     return response.text

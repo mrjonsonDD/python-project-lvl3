@@ -23,7 +23,11 @@ def save_file(data, path):
 
 def upload_files(source):
     logging.info('Uploading resources from page to local folder')
+<<<<<<< HEAD
     bar = IncrementalBar('Processing', max=len(source), suffix='%(percent)d%%')
+=======
+    bar = IncrementalBar('хуй', max=len(source))
+>>>>>>> f77daa26720b0366208a8d85b599f65bd55a2f93
     for link, path in source:
         try:
             r = requests.get(link)

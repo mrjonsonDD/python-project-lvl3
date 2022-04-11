@@ -1,0 +1,2 @@
+define(["OK/LinkedHooksStore"],(function(t){var e=t.collections.ICON_REACTIONS,i=function(){};return i.prototype={activate:function(i){this.el=i,this.hookId=i.getAttribute("data-req"),this.refId=i.getAttribute("data-likeref"),t.add(this.refId,e,this.hookId)},deactivate:function(){t.remove(this.refId,e,this.hookId)}},i}));
+//# sourceMappingURL=/res/source-maps/js/app/ReactIconsWithCounter.js.map
