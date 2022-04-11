@@ -6,15 +6,18 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 
 
+RED1 = '\033[31m'
+RED2 = '\033[37m'
+
 logger = logging.getLogger(__name__)
 WANTED_TAGS = {'link': 'href', 'img': 'src', 'script': 'src'}
 
 
 def is_local(pointer, url):
     logging.info('Checking if file is local')
-    first = urlparse(url).netloc
-    second = urlparse(urljoin(url, pointer)).netloc
-    return first == second
+    parsed_url = urlparse(url).netloc
+    parsed_pointer = urlparse(urljoin(url, pointer)).netloc
+    return parsed_url == parsed_pointer
 
 
 def edit_page(html_page, url, path_files_folder):
@@ -43,28 +46,46 @@ def load_page(url):
     try:
         response = requests.get(url)
         response.raise_for_status()
+        status = response.status_code
     except (requests.exceptions.MissingSchema,
             requests.exceptions.InvalidSchema) as e:
+        logging.error(f'{RED1}Wrong address{RED2}')
         raise Exception('Wrong address') from e
+    
     except requests.exceptions.HTTPError as e:
+        logging.error(f'{RED1}Connection failed{RED2}')
         raise Exception('Connection failed') from e
+    
     except requests.exceptions.ConnectionError as e:
+        logging.error(f'{RED1}Connection error{RED2}')
         raise Exception('Connection error') from e
+    
     return response.text
 
 
 def format_local_name(url, file=None, dir=None):
     logging.info('Formatting a name')
     link = url.rstrip('/')
-    o = urlparse(link)
-    name = o.netloc + o.path
+    parsed_resource = urlparse(link)
+    name = parsed_resource.netloc + parsed_resource.path
     if file:
-        name, name_ext = os.path.splitext(name)
-    final_name = re.sub(r'\W', '-', name)
-    if file:
-        final_name += name_ext
+        final_name = get_file_name(name)
     elif dir:
-        final_name += '_files'
+        final_name = get_dir_name(name)
     else:
+        final_name = re.sub(r'\W', '-', name)
         final_name += '.html'
+    return final_name
+
+
+def get_dir_name(name):
+    final_name = re.sub(r'\W', '-', name)
+    final_name += '_files'
+    return final_name
+
+
+def get_file_name(name):
+    name, name_ext = os.path.splitext(name)
+    final_name = re.sub(r'\W', '-', name)
+    final_name += name_ext
     return final_name

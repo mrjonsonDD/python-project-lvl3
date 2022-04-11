@@ -24,21 +24,16 @@ LOCAL_PATH_NAME = (
 def test_downloader(requests_mock):
     with tempfile.TemporaryDirectory() as temp:
         for fixture, link in PATH_FIXTURES_MOCK_lINKS.items():
-            with open(fixture, 'rb') as fixture_file:
-                mocking_content = fixture_file.read()
+            mocking_content = read(fixture, 'rb')
             requests_mock.get(link, content=mocking_content)
         path_load_page = download(URL_TEST, temp)
-
-        with open(os.path.join(temp, path_load_page)) as test_page:
-            with open('tests/fixtures/after_test_page.html') as fixture_page:
-                assert test_page.read() == fixture_page.read()
+        assert read(os.path.join(temp, path_load_page)) == read(
+            'tests/fixtures/after_test_page.html')
 
         local = [os.path.join(temp, file) for file in LOCAL_PATH_NAME]
 
         for fixture, local in zip(PATH_FIXTURES_MOCK_lINKS, local):
-            with open(fixture, 'rb') as fixture_file:
-                with open(local, 'rb') as load_file:
-                    assert fixture_file.read() == load_file.read()
+            assert read(fixture, 'rb') == read(local, 'rb')
 
 
 @pytest.mark.parametrize('URL, get_name, file_status, dir_status,', [
@@ -72,3 +67,9 @@ def test_load_files():
 def test_errors(URL, path, exception):
     with pytest.raises(Exception):
         download(URL, path)
+
+
+def read(file_path, mode='r'):
+    with open(file_path, mode) as f:
+        result = f.read()
+    return result
