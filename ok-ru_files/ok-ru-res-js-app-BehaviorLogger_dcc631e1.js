@@ -1,2 +1,0 @@
-define(["OK/utils/utils"],(function(e){"use strict";function t(e){var t=document.querySelector(e),r=t?t.innerHTML:null;return r=parseInt(r,10),isNaN(r)&&(r=0),r}return{activate:function(r){e.ajax({url:"/dk",data:{cmd:"BehaviorLogger","st.place":r.getAttribute("data-place"),"st.msgCount":t("#counter_ToolbarMessages .counterText"),"st.msgHasReply":!!document.querySelector("#counter_ToolbarMessages.notifications__reply")}})}}}));
-//# sourceMappingURL=/res/source-maps/js/app/BehaviorLogger.js.map

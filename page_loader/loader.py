@@ -46,20 +46,19 @@ def load_page(url):
     try:
         response = requests.get(url)
         response.raise_for_status()
-        status = response.status_code
     except (requests.exceptions.MissingSchema,
             requests.exceptions.InvalidSchema) as e:
         logging.error(f'{RED1}Wrong address{RED2}')
         raise Exception('Wrong address') from e
-    
+
     except requests.exceptions.HTTPError as e:
         logging.error(f'{RED1}Connection failed{RED2}')
         raise Exception('Connection failed') from e
-    
+
     except requests.exceptions.ConnectionError as e:
         logging.error(f'{RED1}Connection error{RED2}')
         raise Exception('Connection error') from e
-    
+
     return response.text
 
 

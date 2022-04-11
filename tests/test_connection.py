@@ -12,6 +12,3 @@ def test_response_with_error(requests_mock, exc):
     with TemporaryDirectory() as tmpdirname:
         with pytest.raises(Exception):
             assert download(URL_TEST, tmpdirname)
-
-
-
